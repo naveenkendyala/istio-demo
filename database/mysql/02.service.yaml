@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    template.openshift.io/expose-uri: mysql://{.spec.clusterIP}:{.spec.ports[?(.name=="mysql")].port}
+  labels:
+    template: mysql-ephemeral-template
+    template.openshift.io/template-instance-owner: 1e535693-8ddb-42d0-a0cb-ca1201c23612
+  name: mysql-db-service
+  selfLink: /api/v1/namespaces/quarkus-demo/services/mysql-db-service
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: mysql
+    port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    name: mysql-db-service
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

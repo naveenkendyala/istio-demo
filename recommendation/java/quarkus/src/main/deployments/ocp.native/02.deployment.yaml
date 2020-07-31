@@ -2,29 +2,41 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    name: quarkus-jpa-api-native
-  name: quarkus-jpa-api-native-deploy
+    app: recommendation
+    version: v3
+  name: recommendation-v3
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: quarkus-jpa-api-native
+      app: recommendation
+      version: v3
   strategy: {}
   template:
     metadata:
       labels:
-        name: quarkus-jpa-api-native
+        app: recommendation
+        version: v3
     spec:
       containers:
-      - image: naveenkendyala/quarkus-jpa-api-native:1.0.0
-        name: quarkus-jpa-api-native
+      - image: quay.io/naveenkendyala/istio-demo-recommendation:v3
+        name: recommendation
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 9779
+          name: prometheus
+          protocol: TCP
         envFrom:
         - configMapRef:
-            name: quarkus-jpa-api-native-cm
+            name: istio-demo-recommendation-v3-cm
         - secretRef:
-            name: quarkus-jpa-api-native-secret
-        ports:
-        - containerPort: 8090
+            name: istio-demo-recommendation-v3-secret
         resources:
           requests:
             memory: "175Mi"
@@ -34,15 +46,15 @@ spec:
             cpu: "500m"
         livenessProbe:
           httpGet:
-              port: 8090
-              path: /applive
+              port: 8080
+              path: /health/live
           initialDelaySeconds: 5
           periodSeconds: 10
           timeoutSeconds: 2
         readinessProbe:
           httpGet:
-            path: /appready
-            port: 8090
+            path: /health/ready
+            port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
 status: {}

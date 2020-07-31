@@ -4,4 +4,4 @@ data:
   DB_URL: jdbc:mysql://mysql-db-service:3306/db_quarkus_native
 kind: ConfigMap
 metadata:
-  name: quarkus-jpa-api-native-cm
+  name: istio-demo-recommendation-v3-cm

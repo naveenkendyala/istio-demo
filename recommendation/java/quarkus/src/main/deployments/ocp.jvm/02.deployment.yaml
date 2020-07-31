@@ -3,24 +3,25 @@ kind: Deployment
 metadata:
   labels:
     app: recommendation
-    version: v1
-  name: recommendation-v1
+    version: v2
+  name: recommendation-v2
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: recommendation
-      version: v1
+      version: v2
   strategy: {}
   template:
     metadata:
       labels:
         app: recommendation
-        version: v1
+        version: v2
     spec:
       containers:
-      - image: quay.io/naveenkendyala/istio-demo-recommendation:v1
+      - image: quay.io/naveenkendyala/istio-demo-recommendation:v2
         name: recommendation
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: http
@@ -33,9 +34,9 @@ spec:
           protocol: TCP
         envFrom:
         - configMapRef:
-            name: istio-demo-recommendation-v1-cm
+            name: istio-demo-recommendation-v2-cm
         - secretRef:
-            name: istio-demo-recommendation-v1-secret
+            name: istio-demo-recommendation-v2-secret
         resources:
           requests:
             memory: "128Mi"

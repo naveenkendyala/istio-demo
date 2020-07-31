@@ -3,23 +3,25 @@ kind: Deployment
 metadata:
   labels:
     app: recommendation
-    version: v3
-  name: recommendation-v3
+    version: v2
+  name: recommendation-v2
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: recommendation
-      version: v3
+      version: v2
   strategy: {}
   template:
     metadata:
       labels:
         app: recommendation
-        version: v3
+        version: v2
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
-      - image: quay.io/naveenkendyala/istio-demo-recommendation:v3
+      - image: quay.io/naveenkendyala/istio-demo-recommendation:v2
         name: recommendation
         imagePullPolicy: Always
         ports:
@@ -34,27 +36,27 @@ spec:
           protocol: TCP
         envFrom:
         - configMapRef:
-            name: istio-demo-recommendation-v3-cm
+            name: istio-demo-recommendation-v2-cm
         - secretRef:
-            name: istio-demo-recommendation-v3-secret
+            name: istio-demo-recommendation-v2-secret
         resources:
           requests:
-            memory: "175Mi"
+            memory: "128Mi"
             cpu: "500m"
           limits:
-            memory: "350Mi"
+            memory: "175Mi"
             cpu: "500m"
         livenessProbe:
           httpGet:
               port: 8080
               path: /health/live
-          initialDelaySeconds: 5
+          initialDelaySeconds: 12
           periodSeconds: 10
-          timeoutSeconds: 2
+          timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: /health/ready
             port: 8080
-          initialDelaySeconds: 5
+          initialDelaySeconds: 10
           periodSeconds: 10
 status: {}

@@ -1,5 +1,6 @@
 package com.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -8,9 +9,14 @@ import javax.persistence.Id;
 public class ToDo {
 
     @Id
-    private String id;
-    private String task;
-    private String isComplete;
+	@Column(name="ID")
+	private String id;
+	
+	@Column(name="TASK_NAME")
+	private String task;
+	
+	@Column(name="IS_COMPLETE")
+	private String isComplete;
 
     public String getId() {
         return id;

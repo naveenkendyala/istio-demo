@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    name: quarkus-jpa-api-native
+  name: quarkus-jpa-api-native-route
+spec:
+  port:
+    targetPort: 8090
+  to:
+    kind: Service
+    name: quarkus-jpa-api-native-svc
+    weight: 100
+  wildcardPolicy: None

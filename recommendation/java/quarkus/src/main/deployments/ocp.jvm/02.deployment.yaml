@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: recommendation
+    version: v1
+  name: recommendation-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation
+      version: v1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: recommendation
+        version: v1
+    spec:
+      containers:
+      - image: quay.io/naveenkendyala/istio-demo-recommendation:v1
+        name: recommendation
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 9779
+          name: prometheus
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: istio-demo-recommendation-v1-cm
+        - secretRef:
+            name: istio-demo-recommendation-v1-secret
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "175Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+              port: 8080
+              path: /health/live
+          initialDelaySeconds: 12
+          periodSeconds: 10
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+status: {}

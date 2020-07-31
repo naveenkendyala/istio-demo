@@ -24,8 +24,6 @@ public class ToDoResource {
     public List<ToDo> getToDos(){
         return todoService.listToDos();
     }
-    
 
-    
     
 }

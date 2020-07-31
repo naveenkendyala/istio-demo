@@ -1,2 +1,2 @@
-./build-jvm.sh $1
-./build-native.sh $1
+./build-jvm.sh v1
+./build-native.sh v2

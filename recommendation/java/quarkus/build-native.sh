@@ -7,7 +7,7 @@ docker rmi quay.io/naveenkendyala/istio-demo-recommendation:v3
 docker build -f src/main/build/docker/Dockerfile.native -t istio-demo/recommendation:v3 .; 
 
 echo "*****************************************************************************"
-docker tag istio-demo/recommendation:v2 quay.io/naveenkendyala/istio-demo-recommendation:v3; 
+docker tag istio-demo/recommendation:v3 quay.io/naveenkendyala/istio-demo-recommendation:v3; 
 
 echo "*****************************************************************************"
 docker push quay.io/naveenkendyala/istio-demo-recommendation:v3

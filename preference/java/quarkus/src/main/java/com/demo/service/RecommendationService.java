@@ -10,11 +10,11 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @RegisterClientHeaders(BaggageHeadersFactory.class)
 @RegisterRestClient
-public interface PreferenceService {
+public interface RecommendationService {
 
-    @Path("/preference")
+    @Path("/recommendation")
     @GET
     @Produces("text/plain")
-    public String getPreference();
+    public String getRecommendation();
 
 }

@@ -24,7 +24,7 @@ public class PreferenceResource {
     @Path("/preference")
     @Produces(MediaType.TEXT_PLAIN)
     public String getCustomer() {
-        return "hello";
+        return "Hello From Preference";
 
     }
 }

@@ -4,7 +4,7 @@ metadata:
   labels:
     app: customer
     version: v1
-  name: csutomer-v1
+  name: customer-v1
 spec:
   replicas: 1
   selector:
@@ -17,12 +17,13 @@ spec:
       labels:
         app: customer
         version: v1
+      # Inject Side Car
       annotations:
         sidecar.istio.io/inject: "true"
     spec:
       containers:
-      - image: quay.io/naveenkendyala/istio-demo-recommendation:v2
-        name: recommendation
+      - image: quay.io/naveenkendyala/istio-demo-customer:v1
+        name: customer
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -34,11 +35,11 @@ spec:
         - containerPort: 9779
           name: prometheus
           protocol: TCP
-        envFrom:
-        - configMapRef:
-            name: istio-demo-recommendation-v2-cm
-        - secretRef:
-            name: istio-demo-recommendation-v2-secret
+#        envFrom:
+#        - configMapRef:
+#            name: istio-demo-recommendation-v2-cm
+#        - secretRef:
+#            name: istio-demo-recommendation-v2-secret
         resources:
           requests:
             memory: "128Mi"

@@ -34,13 +34,35 @@
   oc create -n istio-system -f 02.servicemeshmemberroll-default.yaml
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 
-## 04. Create demo project
-## Create tutorial project & allow pods to be run as root
-  # Create isttio-demo project
+## 04. SETUP DEMO
+
+  # Create istio-demo project
   oc new-project istio-demo
 
   # Override (if needed) to run containers as root
   # oc adm policy add-scc-to-user anyuid -z default -n istio-demo
+
+  # Deploy Customer Pod
+  oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
+
+  # Deploy Service
+  oc apply -f src/main/deployments/ocp.jvm/02.service.yaml
+
+  # Deploy Gateway for Incoming Traffic
+  # A Gateway is an Entry point to the Cluster
+  oc apply -f src/main/deployments/ocp.jvm/03.Gateway.yml
+
+  # Deploy Virtual Service that ties the "Gateway" and the "Actual Service" Abstractions
+  # Contains Rules for matching these patterns
+  # More than one rule can be created if needed
+  oc apply -f src/main/deployments/ocp.jvm/04.VirtualService.yml
+
+  # Get Gateway Information
+  # Istio Ingress Gateway is Exposed via a Route to the OpenShift. Get the information
+  export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o yaml | yq r - "spec.host")
+
+  # Invoke the Istio Ingress Gateway Endpoint
+  curl $GATEWAY_URL/customer
 
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------

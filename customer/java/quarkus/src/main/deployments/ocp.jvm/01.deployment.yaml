@@ -24,7 +24,7 @@ spec:
       containers:
       - image: quay.io/naveenkendyala/istio-demo-customer:v1
         name: customer
-        imagePullPolicy: Always
+        imagePullPolicy: Always #Used Always because the image will be build everytime before the demo
         ports:
         - containerPort: 8080
           name: http

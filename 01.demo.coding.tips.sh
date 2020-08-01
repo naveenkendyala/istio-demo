@@ -20,15 +20,23 @@ http://localhost:1668
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## Customer Project
+## GOALS
+ # Create Customer Endpoint
+ # Invoke Preference Service
+ # Ensure tracing parameters are passed
+ # Handle Exceptions if Preference is not available
+
 ## Set Up JAX-RS Based Quarkus Project
-## Add opentracing, smallrye, health check, rest client extensions
+## Extensions:
+ # Add opentracing, smallrye, health check, rest client extensions
 ## Add Interface to the Preference using "Micro Profile"
+ # Properties : Add MP interface URL
 ## Register the PreferenceService
 ## Add BaggageHeaderFactory to setup addintional header properties to be transferred
 ## Register the Headers in Preference Service
 ## Add Jaeger Properties to the Quarkus Properties for the header properties propagation
 ## Add Exception handling for the Preference Service
-## 
+## Build Project
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 

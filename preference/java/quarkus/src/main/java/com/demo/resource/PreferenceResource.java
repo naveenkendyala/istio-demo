@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 import com.demo.service.RecommendationService;
 
-
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,12 +19,17 @@ import org.slf4j.LoggerFactory;
 public class PreferenceResource {
 
 
+
+    @Inject
+    @RestClient
+    RecommendationService recommendationService;
+
     //Inbound Method for our Get Process
     @GET
     @Path("/preference")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getCustomer() {
-        return "Hello From Preference";
+    public Response getCustomer() {        
+        return Response.ok(recommendationService.getRecommendation()).build();
 
     }
 }

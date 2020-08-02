@@ -25,7 +25,7 @@ public class PreferenceResource {
     @RestClient
     RecommendationService recommendationService;
 
-
+    
     // Inbound Method for our Get Process
     @GET
     @Path("/preference")

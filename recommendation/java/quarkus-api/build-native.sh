@@ -1,5 +1,5 @@
 #/bin/bash
-#./mvnw clean package -Pnative -Dquarkus.profile=native -Dquarkus.native.container-build=true -Dquarkus.native.container-runtime=docker
+./mvnw clean package -Pnative -Dquarkus.profile=native -Dquarkus.native.container-build=true -Dquarkus.native.container-runtime=docker
 
 echo "*****************************************************************************"
 docker rmi istio-demo/recommendation-api:v3

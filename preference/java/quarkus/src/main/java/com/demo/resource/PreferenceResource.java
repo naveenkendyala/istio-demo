@@ -29,7 +29,7 @@ public class PreferenceResource {
     @GET
     @Path("/preference")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getPrefernce() {
+    public Response getPreference() {
 
         try {
             // Get the Reponse and Send

@@ -21,7 +21,7 @@ spec:
         sidecar.istio.io/inject: "true"
     spec:
       containers:
-      - image: quay.io/naveenkendyala/istio-demo-recommendation:v2
+      - image: quay.io/naveenkendyala/istio-demo-recommendation-api:v2
         name: recommendation
         imagePullPolicy: Always
         ports:

@@ -26,6 +26,7 @@ public class ToDoResource {
     @Inject
     ToDoService todoService;
 
+
     @GET
     @Path("/todos")
     @Produces(MediaType.APPLICATION_JSON)

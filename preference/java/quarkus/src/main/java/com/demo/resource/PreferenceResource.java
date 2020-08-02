@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,7 +34,20 @@ public class PreferenceResource {
         try {
             // Get the Reponse and Send
             String response = recommendationService.getRecommendation();
-            return Response.ok(response).build();
+            return Response.ok(String.format(RESPONSE_STRING_FORMAT, response)).build();
+            
+        } catch (WebApplicationException ex) {
+
+            //This exception is caused when the service is present but the application behind the service is not running
+            //This is the Top level Exception for JAX-RS Applications
+            Response response = ex.getResponse();
+            logger.warn("Non HTTP 20x trying to get the response from Recommendation Service: " + response.getStatus());
+
+            return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                    .entity(String.format(RESPONSE_STRING_FORMAT,
+                            String.format("Error: %d - %s", response.getStatus(), response.readEntity(String.class))))
+                    .build();
+
         } catch (Exception pException) {
 
             //Log the Exception Details

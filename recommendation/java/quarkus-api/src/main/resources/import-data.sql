@@ -1,1 +1,1 @@
-INSERT INTO ToDo (id,task,isComplete) VALUES ('1','LocalTest','COMPLETE');
+INSERT INTO ToDo (ID,TASK_NAME,IS_COMPLETE) VALUES ('1','LocalTest','COMPLETE');

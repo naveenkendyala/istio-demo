@@ -104,23 +104,23 @@
   # Random        : Requests are sent to the service instances randomly.
   # Weighted      : Request are sent to the service instances according to a specific weight (percentage).
   # Least request : Requests are sent to the least busy service instances.
-  oc apply -f istiofiles/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f demo/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
 
   # *** VIRTUAL SERVICE & Destination Rules
   # Route Traffic to the Version 2 of the Recommendation
   # === Show the Kiali Dashboard for the change in the icons
-  oc apply -f istiofiles/01.traffic.control/01.simple.routing/02.virtual-service-recommendation-v2.yml
+  oc apply -f demo/01.traffic.control/01.simple.routing/02.virtual-service-recommendation-v2.yml
 
   # *** REPLACE **** with the next one
-  oc replace -f istiofiles/01.traffic.control/01.simple.routing/03.virtual-service-recommendation-v1.yml
+  oc replace -f demo/01.traffic.control/01.simple.routing/03.virtual-service-recommendation-v1.yml
 
   # DELETE THE Virtual Service
   # This should take the traffic back to V1 and V2
   # === Show the Kiali Dashboard for the change in the icons
 
   # Clean UP : Delete the Destination Rule & Virtual Service
-  oc delete -f istiofiles/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
-  oc delete -f istiofiles/01.traffic.control/01.simple.routing/03.virtual-service-recommendation-v1.yml
+  oc delete -f demo/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
+  oc delete -f demo/01.traffic.control/01.simple.routing/03.virtual-service-recommendation-v1.yml
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
   # CANARY RELEASES
@@ -130,17 +130,17 @@
   # Scale it back to 0 instance
   oc scale --replicas=0 deployment/recommendation-v2 -n istio-demo
 
-  oc apply -f istiofiles/01.traffic.control/02.canary.release/01.destination-rule-recommendation-v1-v2.yml
-  oc apply -f istiofiles/01.traffic.control/02.canary.release/02.virtual-service-recommendation-v1.yml
+  oc apply -f demo/01.traffic.control/02.canary.release/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f demo/01.traffic.control/02.canary.release/02.virtual-service-recommendation-v1.yml
   # Scale it back to 1 instance
   oc scale --replicas=1 deployment/recommendation-v2 -n istio-demo
-  oc replace -f istiofiles/01.traffic.control/02.canary.release/03.virtual-service-recommendation-v1_and_v2_90_10.yml
-  oc replace -f istiofiles/01.traffic.control/02.canary.release/04.virtual-service-recommendation-v1_and_v2_50_50.yml
-  oc replace -f istiofiles/01.traffic.control/02.canary.release/05.virtual-service-recommendation-v1_and_v2_0_100.yml
+  oc replace -f demo/01.traffic.control/02.canary.release/03.virtual-service-recommendation-v1_and_v2_90_10.yml
+  oc replace -f demo/01.traffic.control/02.canary.release/04.virtual-service-recommendation-v1_and_v2_50_50.yml
+  oc replace -f demo/01.traffic.control/02.canary.release/05.virtual-service-recommendation-v1_and_v2_0_100.yml
 
   # Clean UP : Delete Destiation Rule & Virtual Service
-  oc delete -f istiofiles/01.traffic.control/02.canary.release/05.virtual-service-recommendation-v1_and_v2_0_100.yml
-  oc delete -f istiofiles/01.traffic.control/02.canary.release/01.destination-rule-recommendation-v1-v2.yml
+  oc delete -f demo/01.traffic.control/02.canary.release/05.virtual-service-recommendation-v1_and_v2_0_100.yml
+  oc delete -f demo/01.traffic.control/02.canary.release/01.destination-rule-recommendation-v1-v2.yml
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 

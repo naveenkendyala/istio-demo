@@ -87,7 +87,7 @@
   oc scale --replicas=2 deployment/recommendation-v2 -n istio-demo
 
 
-## ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------
   # SIMPLE ROUTING DEMO
 
   # *** DESTINATION RULES ***
@@ -102,22 +102,33 @@
   # Random        : Requests are sent to the service instances randomly.
   # Weighted      : Request are sent to the service instances according to a specific weight (percentage).
   # Least request : Requests are sent to the least busy service instances.
-  oc apply -f istiofiles/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f istiofiles/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
 
   # *** VIRTUAL SERVICE & Destination Rules
   # Route Traffic to the Version 2 of the Recommendation
   # === Show the Kiali Dashboard for the change in the icons
-  oc apply -f istiofiles/02.virtual-service-recommendation-v2.yml 
+  oc apply -f istiofiles/01.simple.routing/02.virtual-service-recommendation-v2.yml
 
   # *** REPLACE **** with the next one
-  oc replace -f istiofiles/03.virtual-service-recommendation-v1.yml 
+  oc replace -f istiofiles/01.simple.routing/03.virtual-service-recommendation-v1.yml
 
   # DELETE THE Virtual Service
   # This should take the traffic back to V1 and V2
   # === Show the Kiali Dashboard for the change in the icons
-  oc delete -f istiofiles/03.virtual-service-recommendation-v1.yml 
+  # Clean UP : Delete the Virtual Service
+  oc delete -f istiofiles/01.simple.routing/03.virtual-service-recommendation-v1.yml
 
-## ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------
+  # CANARY RELEASES
+  # Previous deployments did a 50% to 50% traffic or 100% traffic to one versions
+  # How about we want to experiment on a certain traffic based on % volume
+  oc apply -f istiofiles/02.canary.release/01.virtual-service-recommendation-v1_and_v2_90_10.yml
+  oc replace -f istiofiles/02.canary.release/02.virtual-service-recommendation-v1_and_v2_50_50.yml
+  oc replace -f istiofiles/02.canary.release/03.virtual-service-recommendation-v1_and_v2_25_75.yml
+
+  # Clean UP : Delete the Virtual Service
+  oc delete -f istiofiles/02.canary.release/03.virtual-service-recommendation-v1_and_v2_25_75.yml
+
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## ------------------------------------------------------------------------------------------------------------------------------------------------

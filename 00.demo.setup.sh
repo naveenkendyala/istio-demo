@@ -109,23 +109,23 @@
   # Random        : Requests are sent to the service instances randomly.
   # Weighted      : Request are sent to the service instances according to a specific weight (percentage).
   # Least request : Requests are sent to the least busy service instances.
-  oc apply -f demo/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f demo/01.traffic.control/01.blue.green.release/01.destination-rule-recommendation-v1-v2.yml
 
   # *** VIRTUAL SERVICE & Destination Rules
   # Route Traffic to the Version 2 of the Recommendation
   # === Show the Kiali Dashboard for the change in the icons
-  oc apply -f demo/01.traffic.control/01.simple.routing/02.virtual-service-recommendation-v2.yml
+  oc apply -f demo/01.traffic.control/01.blue.green.release/02.virtual-service-recommendation-v2.yml
 
   # *** REPLACE **** with the next one
-  oc replace -f demo/01.traffic.control/01.simple.routing/03.virtual-service-recommendation-v1.yml
+  oc replace -f demo/01.traffic.control/01.blue.green.release/03.virtual-service-recommendation-v1.yml
 
   # DELETE THE Virtual Service
   # This should take the traffic back to V1 and V2
   # === Show the Kiali Dashboard for the change in the icons
 
   # Clean UP : Delete the Virtual Service & Destination Rule
-  oc delete -f demo/01.traffic.control/01.simple.routing/03.virtual-service-recommendation-v1.yml
-  oc delete -f demo/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
+  oc delete -f demo/01.traffic.control/01.blue.green.release/03.virtual-service-recommendation-v1.yml
+  oc delete -f demo/01.traffic.control/01.blue.green.release/01.destination-rule-recommendation-v1-v2.yml
   
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -148,8 +148,12 @@
   oc delete -f demo/01.traffic.control/02.canary.release/05.virtual-service-recommendation-v1_and_v2_0_100.yml
   oc delete -f demo/01.traffic.control/02.canary.release/01.destination-rule-recommendation-v1-v2.yml
 
-## ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------
+  # USER-AGENT Release
+  # 
 
-## ------------------------------------------------------------------------------------------------------------------------------------------------
-## ------------------------------------------------------------------------------------------------------------------------------------------------
-## ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: recommendation
+  name: recommendation-dr
 spec:
   #This is the service of the recommendation
   host: recommendation-svc

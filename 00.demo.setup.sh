@@ -64,8 +64,27 @@
   # Invoke the Istio Ingress Gateway Endpoint
   curl $GATEWAY_URL/customer
 
+  # Deploy Preference Pod
+  oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
+
+  # Deploy Preference Service
+  oc apply -f src/main/deployments/ocp.jvm/02.service.yaml
+
+  # Deploy Recommendation Pod : V1
+  oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
+
+  # Deploy Recommendation Service : V1
+  oc apply -f src/main/deployments/ocp.jvm/02.service.yaml
+
+  # Make Changes to Recommendation : For V2
+  # Modifying the message and adding a timeout
+  # Deploy
+
+
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## ------------------------------------------------------------------------------------------------------------------------------------------------

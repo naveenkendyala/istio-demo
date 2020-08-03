@@ -3,19 +3,20 @@
 ## Starting with Red Hat OpenShift Service Mesh 1.1.4 requires Elastic Search, Jaeger and Kiali Operators before installing Service Mesh Operator
 ## Must have cluster admin privileges
 ## Select the installation to be stable channel and in all “namespaces"
-  # Elastic Search 	: Red Hat
-  # Jaeger 		      : Red Hat
-  # Kiali 			    : Red Hat
-  # Service Mesh	  : Red Hat
+  # Elastic Search 	: Red Hat [DO NOT Change the target namespaces]
+  # Jaeger 		      : Red Hat [Install at the Cluster Level]
+  # Kiali 			    : Red Hat [Install at the Cluster Level]
+  # Service Mesh	  : Red Hat [Install at the Cluster Level]
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## 02. Install Control Plane in a separate project
+  # Ensure you are in the  project "istio-demo" directory
   # https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_install/preparing-ossm-installation.html
   # create istio-system project
   oc new-project istio-system
 
   # Install the insto-default 
-  oc create -n istio-system -f 01.istio-installation.yaml
+  oc create -n istio-system -f installation/01.istio-installation.yaml
 
   # For customization; refer to the below
   # https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_install/customizing-installation-ossm.html
@@ -31,7 +32,7 @@
   # One project can belong to only one ServiceMeshMemberRoll
   # Log Into the namespace where the ServiceMeshControlPlane is installed [Ex: Istio-system]
   # Create ServiceMeshMemberRoll named “default” in same project as “ServiceMeshControlPlane”
-  oc create -n istio-system -f 02.servicemeshmemberroll-default.yaml
+  oc create -n istio-system -f installation/02.servicemeshmemberroll-default.yaml
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 04. SETUP DEMO
@@ -42,6 +43,8 @@
   # Override (if needed) to run containers as root
   # oc adm policy add-scc-to-user anyuid -z default -n istio-demo
 
+
+  # Change to the Custmer Project
   # Deploy Customer Pod
   oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
 
@@ -66,14 +69,16 @@
   # Invoke the Istio Ingress Gateway Endpoint
   curl $GATEWAY_URL/customer
 
+  # Change to the Preference Project
   # Deploy Preference Pod
   oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
 
   # Deploy Preference Service
   oc apply -f src/main/deployments/ocp.jvm/02.service.yaml
 
+  # Change to the Preference Project
   # Deploy Recommendation Pod : V1
-  oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
+  oc apply -f src/main/deployments/ocp.jvm/01.deployment-v1.yaml
 
   # Deploy Recommendation Service : V1
   oc apply -f src/main/deployments/ocp.jvm/02.service.yaml
@@ -81,7 +86,7 @@
   # Make Changes to Recommendation : For V2
   # Modifying the message
   # Deploy Recommendation Pod : V2
-  oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
+  oc apply -f src/main/deployments/ocp.jvm/03.deployment-v2.yaml
 
   # Change the replicas of V2 to 2 and showcase the routing
   oc scale --replicas=2 deployment/recommendation-v2 -n istio-demo
@@ -118,9 +123,10 @@
   # This should take the traffic back to V1 and V2
   # === Show the Kiali Dashboard for the change in the icons
 
-  # Clean UP : Delete the Destination Rule & Virtual Service
-  oc delete -f demo/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
+  # Clean UP : Delete the Virtual Service & Destination Rule
   oc delete -f demo/01.traffic.control/01.simple.routing/03.virtual-service-recommendation-v1.yml
+  oc delete -f demo/01.traffic.control/01.simple.routing/01.destination-rule-recommendation-v1-v2.yml
+  
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
   # CANARY RELEASES

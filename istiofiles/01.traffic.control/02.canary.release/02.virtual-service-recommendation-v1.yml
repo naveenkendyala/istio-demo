@@ -12,8 +12,4 @@ spec:
         #This is the service of the recommendation
         host: recommendation-svc
         subset: version-v1
-      weight: 25
-    - destination:
-        host: recommendation-svc
-        subset: version-v2
-      weight: 75
+      weight: 100

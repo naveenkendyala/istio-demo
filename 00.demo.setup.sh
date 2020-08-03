@@ -126,12 +126,21 @@
   # CANARY RELEASES
   # Previous deployments did a 50% to 50% traffic or 100% traffic to one versions
   # How about we want to experiment on a certain traffic based on % volume
-  oc apply -f istiofiles/01.traffic.control/02.canary.release/01.virtual-service-recommendation-v1_and_v2_90_10.yml
-  oc replace -f istiofiles/01.traffic.control/02.canary.release/02.virtual-service-recommendation-v1_and_v2_50_50.yml
-  oc replace -f istiofiles/01.traffic.control/02.canary.release/03.virtual-service-recommendation-v1_and_v2_25_75.yml
 
-  # Clean UP : Delete the Virtual Service
-  oc delete -f istiofiles/01.traffic.control/02.canary.release/03.virtual-service-recommendation-v1_and_v2_25_75.yml
+  # Scale it back to 0 instance
+  oc scale --replicas=0 deployment/recommendation-v2 -n istio-demo
+
+  oc apply -f istiofiles/01.traffic.control/02.canary.release/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f istiofiles/01.traffic.control/02.canary.release/02.virtual-service-recommendation-v1.yml
+  # Scale it back to 1 instance
+  oc scale --replicas=1 deployment/recommendation-v2 -n istio-demo
+  oc replace -f istiofiles/01.traffic.control/02.canary.release/03.virtual-service-recommendation-v1_and_v2_90_10.yml
+  oc replace -f istiofiles/01.traffic.control/02.canary.release/04.virtual-service-recommendation-v1_and_v2_50_50.yml
+  oc replace -f istiofiles/01.traffic.control/02.canary.release/05.virtual-service-recommendation-v1_and_v2_0_100.yml
+
+  # Clean UP : Delete Destiation Rule & Virtual Service
+  oc delete -f istiofiles/01.traffic.control/02.canary.release/05.virtual-service-recommendation-v1_and_v2_0_100.yml
+  oc delete -f istiofiles/01.traffic.control/02.canary.release/01.destination-rule-recommendation-v1-v2.yml
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 

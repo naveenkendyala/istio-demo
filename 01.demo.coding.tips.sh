@@ -34,6 +34,11 @@ http://localhost:1668
  # Properties : Add MP interface URL
 ## Register the PreferenceService
 ## Add BaggageHeaderFactory to setup addintional header properties to be transferred
+ # https://www.whoishostingthis.com/tools/user-agent/
+ # The "user-agent" header is added to OpenTracing baggage in the Customer service
+ # From there it is automatically propagated to all downstream services
+ # To enable automatic baggage propagation all intermediate services have to be instrumented with OpenTracing
+ # The baggage header for user agent has following form baggage-user-agent: <value>.
 ## Register the Headers in Preference Service
 ## Add Jaeger Properties to the Quarkus Properties for the header properties propagation
 ## Add Exception handling for the Preference Service

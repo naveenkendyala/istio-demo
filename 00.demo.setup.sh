@@ -52,9 +52,11 @@
   # A Gateway is an Entry point to the Cluster
   oc apply -f src/main/deployments/ocp.jvm/03.Gateway.yml
 
+
   # Deploy Virtual Service that ties the "Gateway" and the "Actual Service" Abstractions
   # Contains Rules for matching these patterns
   # More than one rule can be created if needed
+  # A virtual service is a Kubernetes custom resource, which allows you to configure how the requests to services in the Service Mesh are routed.
   oc apply -f src/main/deployments/ocp.jvm/04.VirtualService.yml
 
   # Get Gateway Information
@@ -77,13 +79,43 @@
   oc apply -f src/main/deployments/ocp.jvm/02.service.yaml
 
   # Make Changes to Recommendation : For V2
-  # Modifying the message and adding a timeout
-  # Deploy
+  # Modifying the message
+  # Deploy Recommendation Pod : V2
+  oc apply -f src/main/deployments/ocp.jvm/01.deployment.yaml
 
+  # Change the replicas of V2 to 2 and showcase the routing
+  oc scale --replicas=2 deployment/recommendation-v2 -n istio-demo
 
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
+  # SIMPLE ROUTING DEMO
 
+  # *** DESTINATION RULES ***
+  # Destination rules are custom resources that define policies that apply to the traffic of a service
+  # Using those traffic policies, you can configure the load balancing behavior to distribute traffic between the instances of a service.
+  # Virtual services route traffic to a specific destination, and destination rules operate in the traffic routed to that destination.
+  # The policies defined in destination rules are applied after the routing rules in the virtual services are evaluated
+  # With destination rules you can define load balancing, connection limits, and outlier detection policies.
+  # Load Balancing Traffic
+  # With destination rules, you can specify the strategy used to distribute traffic between the instances of a service.
+  # Round-robin   : Requests are sent to each service instance in turn.
+  # Random        : Requests are sent to the service instances randomly.
+  # Weighted      : Request are sent to the service instances according to a specific weight (percentage).
+  # Least request : Requests are sent to the least busy service instances.
+  oc apply -f istiofiles/01.destination-rule-recommendation-v1-v2.yml
+
+  # *** VIRTUAL SERVICE & Destination Rules
+  # Route Traffic to the Version 2 of the Recommendation
+  # === Show the Kiali Dashboard for the change in the icons
+  oc apply -f istiofiles/02.virtual-service-recommendation-v2.yml 
+
+  # *** REPLACE **** with the next one
+  oc replace -f istiofiles/03.virtual-service-recommendation-v1.yml 
+
+  # DELETE THE Virtual Service
+  # This should take the traffic back to V1 and V2
+  # === Show the Kiali Dashboard for the change in the icons
+  oc delete -f istiofiles/03.virtual-service-recommendation-v1.yml 
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## ------------------------------------------------------------------------------------------------------------------------------------------------

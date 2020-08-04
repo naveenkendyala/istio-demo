@@ -182,12 +182,34 @@
 
   #CleanUP
   oc delete -f demo/01.traffic.control/04.traffic.mirroring/02.virtual-service-recommendation-v1-mirror-v2.yml
-  oc delete -f demo/01.traffic.control/04.traffic.mirroring/01.destination-rule-recommendation-v1-v2.yml
-  
+  oc delete -f demo/01.traffic.control/04.traffic.mirroring/01.destination-rule-recommendation-v1-v2.yml  
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
+  # RETRY
+  # ISTIO does automatic retry of the requests if the service fails
+  # The interval between retries (25ms+) is variable and determined automatically by Istio, preventing the called service from being overwhelmed with requests
+  # The default retry behavior for HTTP requests is to retry twice before returning the error
+  # To not overwhelm, one can define the retries and the time between the retries
+  # Go to Recommendation V2 Terminal and execute the below command
+  curl localhost:8080/misbehave
+
+  # Show the Responses from V1
+  # Show the Requests getting registered for V2 as well
+
+  # Changing the default retries
+  #oc apply -f demo/02.resiliency/01.retry/01.destination-rule-recommendation-v1-v2.yml
+  #oc apply -f demo/02.resiliency/01.retry/02.virtual-service-recommendation-retry.yml  
+
+  #oc delete -f demo/02.resiliency/01.retry/02.virtual-service-recommendation-retry.yml
+  #oc delete -f demo/02.resiliency/01.retry/01.destination-rule-recommendation-v1-v2.yml
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
+  # TIMEOUT
+  # Set the new timeout image for Recommendation V2
+  oc set image deployment/recommendation-v2 recommendation=quay.io/naveenkendyala/istio-demo-recommendation:v2-timeout
+
+  # Revert to the regular V2
+  oc set image deployment/recommendation-v2 recommendation=quay.io/naveenkendyala/istio-demo-recommendation:v2
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------

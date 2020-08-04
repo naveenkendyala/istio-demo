@@ -42,7 +42,7 @@ public class RecommendationResource {
         count++;
         logger.info(String.format("recommendation request from %s: %d", HOSTNAME, count));
 
-        // timeout();
+        //timeout();
 
         logger.debug("Recommendation service ready to return");
         if (misbehave) {

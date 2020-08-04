@@ -158,14 +158,22 @@
   oc replace -f demo/01.traffic.control/03.user.agent.release/03.virtual-service-safari-recommendation-v2.yml
 
   # Run CURL with  -A option to simulate user-agent
+  # Alternatively run with Safari / Chrome
   curl -A Safari $GATEWAY_URL/customer;
+
+  # One can modify the Rule to contain "Mobile" and we can target the services for specific frontends
 
   # CleanUp
   oc delete -f demo/01.traffic.control/03.user.agent.release/03.virtual-service-safari-recommendation-v2.yml
   oc delete -f demo/01.traffic.control/03.user.agent.release/01.destination-rule-recommendation-v1-v2.yml
 
-
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
+  # TRAFFIC MIRRORING
+  oc apply -f demo/01.traffic.control/04.traffic.mirroring/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f demo/01.traffic.control/04.traffic.mirroring/02.virtual-service-recommendation-v1-mirror-v2.yml
+
+
+
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------

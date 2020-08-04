@@ -109,15 +109,22 @@
   # Random        : Requests are sent to the service instances randomly.
   # Weighted      : Request are sent to the service instances according to a specific weight (percentage).
   # Least request : Requests are sent to the least busy service instances.
+
+  # Lets Scale recommendation-v2 to 0 instance
+  oc scale --replicas=0 deployment/recommendation-v2 -n istio-demo
+
   oc apply -f demo/01.traffic.control/01.blue.green.release/01.destination-rule-recommendation-v1-v2.yml
 
   # *** VIRTUAL SERVICE & Destination Rules
   # Route Traffic to the Version 2 of the Recommendation
   # === Show the Kiali Dashboard for the change in the icons
-  oc apply -f demo/01.traffic.control/01.blue.green.release/02.virtual-service-recommendation-v2.yml
+  oc apply -f demo/01.traffic.control/01.blue.green.release/03.virtual-service-recommendation-v1.yml
+  
+  # Lets Scale recommendation-v2 to 1 instance
+  oc scale --replicas=1 deployment/recommendation-v2 -n istio-demo
 
   # *** REPLACE **** with the next one
-  oc replace -f demo/01.traffic.control/01.blue.green.release/03.virtual-service-recommendation-v1.yml
+  oc replace -f demo/01.traffic.control/01.blue.green.release/02.virtual-service-recommendation-v2.yml
 
   # DELETE THE Virtual Service
   # This should take the traffic back to V1 and V2
@@ -169,12 +176,18 @@
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
   # TRAFFIC MIRRORING
+  # Continue to Serve Customers on a Specific Version but mirror the traffic to another version internally
   oc apply -f demo/01.traffic.control/04.traffic.mirroring/01.destination-rule-recommendation-v1-v2.yml
   oc apply -f demo/01.traffic.control/04.traffic.mirroring/02.virtual-service-recommendation-v1-mirror-v2.yml
 
-
+  #CleanUP
+  oc delete -f demo/01.traffic.control/04.traffic.mirroring/02.virtual-service-recommendation-v1-mirror-v2.yml
+  oc delete -f demo/01.traffic.control/04.traffic.mirroring/01.destination-rule-recommendation-v1-v2.yml
+  
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
+
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
+
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------

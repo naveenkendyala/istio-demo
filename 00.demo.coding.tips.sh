@@ -27,6 +27,15 @@ http://localhost:1668
  # Handle Exceptions if Preference is not available
 
 ## Set Up JAX-RS Based Quarkus Project
+mvn io.quarkus:quarkus-maven-plugin:1.3.4.Final-redhat-00004:create \
+    -DprojectGroupId=com.demo \
+    -DprojectArtifactId=customer \
+    -DplatformGroupId=com.redhat.quarkus \
+    -DplatformArtifactId=quarkus-universe-bom \
+    -DplatformVersion=1.3.4.Final-redhat-00004 \
+    -DclassName="com.demo.CustomerResource" \
+    -Dpath="/customer"
+
 ## Disable code in the Test Folders or Comment the test cases out
 ## Extensions:
  # Add opentracing, smallrye, health check, rest client extensions
@@ -45,14 +54,6 @@ http://localhost:1668
 ## Build Project
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
-mvn io.quarkus:quarkus-maven-plugin:1.3.4.Final-redhat-00004:create \
-    -DprojectGroupId=com.demo \
-    -DprojectArtifactId=preference \
-    -DplatformGroupId=com.redhat.quarkus \
-    -DplatformArtifactId=quarkus-universe-bom \
-    -DplatformVersion=1.3.4.Final-redhat-00004 \
-    -DclassName="com.demo.PreferenceResource" \
-    -Dpath="/preference"
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 

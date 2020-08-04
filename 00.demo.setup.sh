@@ -157,6 +157,14 @@
   # Everyone else default to Recommendation V1
   oc replace -f demo/01.traffic.control/03.user.agent.release/03.virtual-service-safari-recommendation-v2.yml
 
+  # Run CURL with  -A option to simulate user-agent
+  curl -A Safari $GATEWAY_URL/customer;
+
+  # CleanUp
+  oc delete -f demo/01.traffic.control/03.user.agent.release/03.virtual-service-safari-recommendation-v2.yml
+  oc delete -f demo/01.traffic.control/03.user.agent.release/01.destination-rule-recommendation-v1-v2.yml
+
+
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------

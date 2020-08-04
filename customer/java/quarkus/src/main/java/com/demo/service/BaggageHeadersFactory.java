@@ -17,6 +17,10 @@ public class BaggageHeadersFactory implements ClientHeadersFactory {
         String userAgent = incomingHeaders.getFirst("user-agent");
         headers.putSingle("baggage-user-agent", userAgent);
 
+        //Print the User-Agent
+        //System.out.println("user-agent="+incomingHeaders.getFirst("user-agent"));
+
+
         String authorization = incomingHeaders.getFirst("Authorization");
         if (authorization != null) {
             headers.putSingle("Authorization", authorization);

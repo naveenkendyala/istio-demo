@@ -150,7 +150,12 @@
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
   # USER-AGENT Release
-  # 
+  oc apply -f demo/01.traffic.control/03.user.agent.release/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f demo/01.traffic.control/03.user.agent.release/02.virtual-service-recommendation-v1.yml
+
+  # Set the Safari Users to go to Recommendation V2
+  # Everyone else default to Recommendation V1
+  oc replace -f demo/01.traffic.control/03.user.agent.release/03.virtual-service-safari-recommendation-v2.yml
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------

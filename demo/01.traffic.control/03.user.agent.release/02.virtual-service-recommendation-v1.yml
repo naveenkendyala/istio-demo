@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation-vs
+spec:
+  hosts:
+  #This is the service of the recommendation
+  - recommendation-svc
+  http:
+  - route:
+    - destination:
+        #This is the service of the recommendation
+        host: recommendation-svc
+        subset: version-v1
+      weight: 100

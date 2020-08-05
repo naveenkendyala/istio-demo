@@ -208,6 +208,12 @@
   # Set the new timeout image for Recommendation V2
   oc set image deployment/recommendation-v2 recommendation=quay.io/naveenkendyala/istio-demo-recommendation:v2-timeout
 
+  # Create a Virtual Service that will ignore
+  oc apply -f demo/02.resiliency/02.timeout/01.virtual-service-recommendation-timeout.yml
+
+  # Remove the Virtual Service
+  oc delete -f demo/02.resiliency/02.timeout/01.virtual-service-recommendation-timeout.yml
+
   # Revert to the regular V2
   oc set image deployment/recommendation-v2 recommendation=quay.io/naveenkendyala/istio-demo-recommendation:v2
 

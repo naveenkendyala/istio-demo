@@ -8,6 +8,9 @@ spec:
   - labels:
       version: v2
     name: version-v2
+  - labels:
+      version: v1
+    name: version-v1
   trafficPolicy:
     connectionPool:
       http:

@@ -220,6 +220,7 @@
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
   # CIRCUIT BREAKER
   # Send 40 Requests to Recommendation Service with Seige
+  # 10 clients sending 4 concurrent requests each
   siege -r 10 -c 4 -v $GATEWAY_URL/customer
 
   # Go to Recommendation V2 Terminal and execute the below command
@@ -227,6 +228,7 @@
   curl localhost:8080/misbehave
 
   # Repeat : Send 40 Requests to Recommendation Service with Seige
+  # 10 clients sending 4 concurrent requests each
   siege -r 10 -c 4 -v $GATEWAY_URL/customer
 
   oc apply -f demo/02.resiliency/03.circuit.breaker/01.destination-rule-recommendation-v1-v2.yml
@@ -236,7 +238,7 @@
   # Circuit breaker and pool ejection are used to avoid reaching a failing pod for a specified amount of time
   # In this way when some consecutive errors are produced, the failing pod is ejected from eligible pods
   # Further requests are not sent anymore to that instance but to a healthy instance
-  oc apply -f demo/02.resiliency/03.circuit.breaker/01.destination-rule-recommendation_cb_policy_version_v2.yml
+  oc apply -f demo/02.resiliency/03.circuit.breaker/03.destination-rule-recommendation_cb_policy_version_v2.yml
 
   # 
   oc scale --replicas=2 deployment/recommendation-v2

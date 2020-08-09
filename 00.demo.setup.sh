@@ -218,7 +218,29 @@
   oc set image deployment/recommendation-v2 recommendation=quay.io/naveenkendyala/istio-demo-recommendation:v2
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
-  #  CIRCUIT BREAKER
+  # CIRCUIT BREAKER
+  # Send 40 Requests to Recommendation Service with Seige
+  siege -r 10 -c 4 -v $GATEWAY_URL/customer
+
+  # Go to Recommendation V2 Terminal and execute the below command
+  # This should make all the messages going to Recommendation V2 fail
+  curl localhost:8080/misbehave
+
+  # Repeat : Send 40 Requests to Recommendation Service with Seige
+  siege -r 10 -c 4 -v $GATEWAY_URL/customer
+
+  oc apply -f demo/02.resiliency/03.circuit.breaker/01.destination-rule-recommendation-v1-v2.yml
+  oc apply -f demo/02.resiliency/03.circuit.breaker/02.virtual-service-recommendation-v2.yml
+
+  # Observe that the service did not fail
+  # Circuit breaker and pool ejection are used to avoid reaching a failing pod for a specified amount of time
+  # In this way when some consecutive errors are produced, the failing pod is ejected from eligible pods
+  # Further requests are not sent anymore to that instance but to a healthy instance
+  oc apply -f demo/02.resiliency/03.circuit.breaker/01.destination-rule-recommendation_cb_policy_version_v2.yml
+
+  # 
+  oc scale --replicas=2 deployment/recommendation-v2
+
 
 ### ------------------------------------------------------------------------------------------------------------------------------------------------
 ### ------------------------------------------------------------------------------------------------------------------------------------------------

@@ -17,7 +17,8 @@
 
   # Install the insto-default 
   oc create -n istio-system -f installation/01.istio-installation.yaml
-
+  oc create -n istio-system -f installation/02.servicemeshmemberroll-default.yaml 
+  
   # For customization; refer to the below
   # https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_install/customizing-installation-ossm.html
 
@@ -36,6 +37,8 @@
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 04. SETUP DEMO
+  # Start the Demo
+  read -p "**** Lets Start the Demo ****"
 
   # Create istio-demo project
   oc new-project istio-demo
@@ -76,7 +79,7 @@
   # Deploy Preference Service
   oc apply -f src/main/deployments/ocp.jvm/02.service.yaml
 
-  # Change to the Preference Project
+  # Change to the Recommendation Project
   # Deploy Recommendation Pod : V1
   oc apply -f src/main/deployments/ocp.jvm/01.deployment-v1.yaml
 
@@ -221,7 +224,7 @@
   # CIRCUIT BREAKER
   # Send 40 Requests to Recommendation Service with Seige
   # 10 clients sending 4 concurrent requests each
-  siege -r 10 -c 4 -v $GATEWAY_URL/customer
+     $GATEWAY_URL/customer
 
   # Go to Recommendation V2 Terminal and execute the below command
   # This should make all the messages going to Recommendation V2 fail

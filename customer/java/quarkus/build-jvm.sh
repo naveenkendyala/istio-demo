@@ -1,6 +1,6 @@
 #/bin/bash
 #Quarkus Version
-VERSION=v1
+VERSION=v2
 
 ./mvnw clean package -Dquarkus-profile=jvm
 

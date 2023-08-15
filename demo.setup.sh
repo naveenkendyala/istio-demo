@@ -69,7 +69,7 @@
 
   # Get Gateway Information
   # Istio Ingress Gateway is Exposed via a Route to the OpenShift. Get the information
-  export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o yaml | yq r - "spec.host")
+  export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o yaml | yq ".spec.host")
 
   # Invoke the Istio Ingress Gateway Endpoint
   curl $GATEWAY_URL/customer

@@ -15,7 +15,7 @@ oc new-project istio-demo
 oc project istio-demo
 
 # Override (if needed) to run containers as root
-# oc adm policy add-scc-to-user anyuid -z default -n istio-demo
+oc adm policy add-scc-to-user anyuid -z default -n istio-demo
 
 read -p $'\e[32m[STEP-02: Deploy Customer Pods, Service] \e[0m: '
 # Change to the Custmer Project
@@ -36,10 +36,11 @@ oc apply -f customer/java/quarkus/src/main/deployments/ocp.jvm/03.Gateway.yml
 # A virtual service is a Kubernetes custom resource, which allows you to configure how the requests to services in the Service Mesh are routed.
 oc apply -f customer/java/quarkus/src/main/deployments/ocp.jvm/04.VirtualService.yml
 
-read -p $'\e[32m[STEP-04: export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o yaml | yq r - "spec.host")] \e[0m: '
+read -p $'\e[32m[STEP-04: export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o yaml | yq ".spec.host")] \e[0m: '
 # Get Gateway Information
 # Istio Ingress Gateway is Exposed via a Route to the OpenShift. Get the information
-export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o yaml | yq r - "spec.host")
+export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o yaml | yq ".spec.host")
+echo "GATEWAY_URL=[http://"$GATEWAY_URL"]"
 
 # Invoke the Istio Ingress Gateway Endpoint
 #curl $GATEWAY_URL/customer

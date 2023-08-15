@@ -1,6 +1,6 @@
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## 01. Install Operators : From the Web Console
-## Starting with Red Hat OpenShift Service Mesh 1.1.4 requires Elastic Search, Jaeger and Kiali Operators before installing Service Mesh Operator
+## Starting with Red Hat OpenShift Service Mesh 2.4.2 requires Elastic Search, Jaeger and Kiali Operators before installing Service Mesh Operator
 ## Must have cluster admin privileges
 ## Select the installation to be stable channel and in all “namespaces"
   # Elastic Search 	: Red Hat [DO NOT Change the target namespaces]

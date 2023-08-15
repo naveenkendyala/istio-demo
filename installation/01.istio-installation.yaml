@@ -17,13 +17,24 @@ spec:
     jaeger:
       install:
         storage:
-          elasticsearch:
-            nodeCount: 1
-            redundancyPolicy: SingleRedundancy
-          type: Elasticsearch
+          type: Memory
     kiali:
       enabled: true
     prometheus:
       enabled: true
   telemetry:
     type: Istiod
+  # Run the control plane on the infrastructure nodes
+  # 
+  #runtime:
+  #  defaults:
+  #    pod:
+  #      nodeSelector: 
+  #        node-role.kubernetes.io/infra: ""
+  #      tolerations: 
+  #      - effect: NoSchedule
+  #        key: node-role.kubernetes.io/infra
+  #        value: reserved
+  #      - effect: NoExecute
+  #        key: node-role.kubernetes.io/infra
+  #        value: reserved

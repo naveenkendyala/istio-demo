@@ -4,7 +4,11 @@ metadata:
   name: default
   namespace: istio-system
 spec:
-  members:
-    # a list of projects joined into the service mesh
-    - tutorial
-    - istio-demo
+  # This can be based on selectors (like this yaml) or based on namespaces(example below)
+  #members:
+  #  - istio-demo
+  #  - another-project
+  memberSelectors:
+    #Namespace Labels
+    - matchLabels:
+        istio-injection: enabled

@@ -17,6 +17,8 @@
 
   # Install the insto-default 
   oc create -n istio-system -f installation/01.istio-installation.yaml
+  
+  # The operator create a ServiceMeshMemberRoll (if one does not exist a part of default configuration)
   oc create -n istio-system -f installation/02.servicemeshmemberroll-default.yaml 
   
   # For customization; refer to the below

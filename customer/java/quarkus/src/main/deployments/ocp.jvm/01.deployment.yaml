@@ -20,7 +20,7 @@ spec:
       # Inject Side Car
       annotations:
         sidecar.istio.io/inject: "true"
-    spec:
+    spec:    
       containers:
       - image: quay.io/naveenkendyala/istio-demo-customer:v1
         name: customer
@@ -60,4 +60,12 @@ spec:
             port: 8080
           initialDelaySeconds: 10
           periodSeconds: 10
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+              - ALL
 status: {}

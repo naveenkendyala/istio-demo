@@ -1,14 +1,16 @@
 #/bin/bash
-# Pakage the Application
+#Quarkus Version
+VERSION=v1
+
 ./mvnw clean package -Dquarkus-profile=jvm
 
 # Clean up
 echo "*****************************************************************************"
-docker rmi istio-demo/customer:v1
-docker rmi quay.io/naveenkendyala/istio-demo-customer:v1
+podman rmi istio-demo/customer:${VERSION}
+podman rmi quay.io/naveenkendyala/istio-demo-customer:${VERSION}
 
 # Build, Tag and Push
 echo "*****************************************************************************"
-docker build -f src/main/build/docker/Dockerfile.jvm -t istio-demo/customer:v1 .; 
-docker tag istio-demo/customer:v1 quay.io/naveenkendyala/istio-demo-customer:v1; 
-docker push quay.io/naveenkendyala/istio-demo-customer:v1
+podman build --no-cache --layers=false -f src/main/build/docker/Dockerfile.jvm -t istio-demo/customer:${VERSION} .; 
+podman tag istio-demo/customer:${VERSION} quay.io/naveenkendyala/istio-demo-customer:${VERSION}; 
+podman push quay.io/naveenkendyala/istio-demo-customer:${VERSION}

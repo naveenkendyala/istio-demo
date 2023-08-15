@@ -3,10 +3,10 @@
 ## Starting with Red Hat OpenShift Service Mesh 2.4.2 requires Elastic Search, Jaeger and Kiali Operators before installing Service Mesh Operator
 ## Must have cluster admin privileges
 ## Select the installation to be stable channel and in all “namespaces"
-  # Elastic Search 	: Red Hat [DO NOT Change the target namespaces]
-  # Jaeger 		      : Red Hat [Install at the Cluster Level]
-  # Kiali 			    : Red Hat [Install at the Cluster Level]
-  # Service Mesh	  : Red Hat [Install at the Cluster Level]
+  # Elastic Search 	: OpenShift Elasticsearch Operator [DO NOT Change the target namespaces]
+  # Jaeger 		      : Red Hat OpenShift distributed tracing platform [Install at the Cluster Level]
+  # Kiali 			    : Kiali Operator by Red Hat [Install at the Cluster Level]
+  # Service Mesh	  : Red Hat OpenShift Service Mesh [Install at the Cluster Level]
 
 ## ------------------------------------------------------------------------------------------------------------------------------------------------
 ## 02. Install Control Plane in a separate project

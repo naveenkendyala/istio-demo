@@ -1,60 +1,29 @@
-apiVersion: maistra.io/v1
+apiVersion: maistra.io/v2
 kind: ServiceMeshControlPlane
 metadata:
-  name: basic-install
+  name: basic
+  namespace: istio-system
 spec:
-
-  istio:
-    global:
-      proxy:
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 500m
-            memory: 128Mi
-
-    gateways:
-      istio-egressgateway:
-        autoscaleEnabled: false
-        autoscaleMin: 1
-        autoscaleMax: 5
-      istio-ingressgateway:
-        autoscaleEnabled: false
-        autoscaleMin: 1
-        autoscaleMax: 5
-        ior_enabled: false
-
-    mixer:
-      policy:
-        autoscaleEnabled: false
-
-      telemetry:
-        autoscaleEnabled: false
-        resources:
-          requests:
-            cpu: 100m
-            memory: 1G
-          limits:
-            cpu: 500m
-            memory: 4G
-
-    pilot:
-      autoscaleEnabled: false
-      traceSampling: 100
-
-    kiali:
-      enabled: true
-      dashboard:
-        viewOnlyMode: false
-      ingress:
-        enabled: true
-
+  version: v2.4
+  mode: ClusterWide
+  tracing:
+    type: Jaeger
+    sampling: 10000
+  policy:
+    type: Istiod
+  addons:
     grafana:
       enabled: true
-
-    tracing:
+    jaeger:
+      install:
+        storage:
+          elasticsearch:
+            nodeCount: 1
+            redundancyPolicy: SingleRedundancy
+          type: Elasticsearch
+    kiali:
       enabled: true
-      jaeger:
-        template: all-in-one
+    prometheus:
+      enabled: true
+  telemetry:
+    type: Istiod

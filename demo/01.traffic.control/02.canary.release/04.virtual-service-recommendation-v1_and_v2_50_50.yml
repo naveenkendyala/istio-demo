@@ -5,15 +5,15 @@ metadata:
 spec:
   hosts:
   #This is the service of the recommendation
-  - recommendation-svc
+  - recommendation
   http:
   - route:
     - destination:
         #This is the service of the recommendation
-        host: recommendation-svc
+        host: recommendation
         subset: version-v1
       weight: 50
     - destination:
-        host: recommendation-svc
+        host: recommendation
         subset: version-v2
       weight: 50

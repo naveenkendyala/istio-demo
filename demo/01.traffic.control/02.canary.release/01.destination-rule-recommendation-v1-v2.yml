@@ -1,10 +1,10 @@
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: recommendation-dr
 spec:
   #This is the service of the recommendation
-  host: recommendation-svc
+  host: recommendation
   subsets:
   - labels:
       version: v1

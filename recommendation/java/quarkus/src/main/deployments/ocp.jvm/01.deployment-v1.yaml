@@ -11,6 +11,7 @@ metadata:
     app: recommendation
     version: v1
     app.kubernetes.io/part-of: customer-experience
+    app.kubernetes.io/instance: recommendation-v1
   name: recommendation-v1
 spec:
   replicas: 1

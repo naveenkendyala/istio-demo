@@ -4,7 +4,10 @@ metadata:
   labels:
     app: customer
     version: v1
-    app.kubernetes.io/part-of: customer-experience    
+    app.kubernetes.io/part-of: customer-experience
+    app.kubernetes.io/instance: customer
+  annotations:
+    app.openshift.io/connects-to: preference
   name: customer
 spec:
   replicas: 1

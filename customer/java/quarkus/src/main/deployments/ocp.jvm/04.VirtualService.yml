@@ -1,20 +1,20 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: customer-vs
+  name: customer-gateway
 spec:
   hosts:
   - "*"
-  gateways:                 # Binds the Virtual Services to the Gateway
-  - istio-demo-gateway      # Ensure you mention the gateway that was provisioned
-  http:                     # Traffic Type
-  - match:                  # Rules for Matching Traffic. More than one Rule Can Be provided
+  gateways:                       # Binds the Virtual Services to the Gateway
+  - customer-gateway              # Ensure you mention the gateway that was provisioned
+  http:                           # Traffic Type
+  - match:                        # Rules for Matching Traffic. More than one Rule Can Be provided
     - uri:
         prefix: /customer
     rewrite:
-      uri: /customer
+      uri: /
     route:
     - destination:
-        host: customer-svc
+        host: customer
         port:
           number: 8080

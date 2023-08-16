@@ -11,20 +11,22 @@ spec:
     matchLabels:
       app: recommendation
       version: v2
-  strategy: {}
   template:
     metadata:
       labels:
         app: recommendation
         version: v2
-      # Inject Side Car
       annotations:
         sidecar.istio.io/inject: "true"
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
-      - image: quay.io/naveenkendyala/istio-demo-recommendation:v2
-        name: recommendation
-        imagePullPolicy: Always #Used Always because the image will be build everytime before the demo
+      - env:
+        - name: JAVA_OPTIONS
+          value: -Xms15m -Xmx15m -Xmn15m
+        name: recommendation          
+        image: quay.io/rhdevelopers/istio-tutorial-recommendation:v2.1
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
           name: http
@@ -35,29 +37,26 @@ spec:
         - containerPort: 9779
           name: prometheus
           protocol: TCP
-#        envFrom:
-#        - configMapRef:
-#            name: istio-demo-recommendation-v2-cm
-#        - secretRef:
-#            name: istio-demo-recommendation-v2-secret
         resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
+          requests: 
+            memory: "40Mi" 
+            cpu: "200m" # 1/5 core
           limits:
-            memory: "175Mi"
-            cpu: "500m"
+            memory: "100Mi"
+            cpu: "500m" 
         livenessProbe:
-          httpGet:
-              port: 8080
-              path: /health/live
-          initialDelaySeconds: 12
-          periodSeconds: 10
-          timeoutSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /health/ready
+          httpGet:            
             port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 10
-status: {}
+            path: /health/live
+          initialDelaySeconds: 5
+          periodSeconds: 4
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:            
+            port: 8080
+            path: /health/ready
+          initialDelaySeconds: 6
+          periodSeconds: 5
+          timeoutSeconds: 1
+        securityContext:
+          privileged: false

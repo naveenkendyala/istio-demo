@@ -15,7 +15,7 @@ oc new-project istio-demo
 oc project istio-demo
 
 # Override (if needed) to run containers as root
-oc adm policy add-scc-to-user anyuid -z default -n istio-demo
+oc adm policy add-scc-to-user anyuid -z default -n istio-demo > /dev/null
 
 read -p $'\e[32m[STEP-02: Deploy Customer Pods, Service] \e[0m: '
 # Change to the Custmer Project

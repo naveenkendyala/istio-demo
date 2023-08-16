@@ -4,13 +4,14 @@ metadata:
   labels:
     app: recommendation
     version: v2
+    app.kubernetes.io/part-of: customer-experience
   name: recommendation-v2
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: recommendation
-      version: v2
+      version: v2      
   template:
     metadata:
       labels:

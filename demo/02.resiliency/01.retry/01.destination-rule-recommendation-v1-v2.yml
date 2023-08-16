@@ -4,7 +4,7 @@ metadata:
   name: recommendation-dr
 spec:
   #This is the service of the recommendation
-  host: recommendation-svc
+  host: recommendation
   subsets:
   - labels:
       version: v1

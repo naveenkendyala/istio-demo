@@ -5,13 +5,14 @@ metadata:
 spec:
   hosts:
   #This is the service of the recommendation
-  - recommendation-svc
+  - recommendation
   http:
   - route:
     - destination:
         #This is the service of the recommendation
-        host: recommendation-svc
-        subset: version-v2
+        host: recommendation
+        subset: version-v1
     retries:
-      attempts: 1
+      attempts: 2
       perTryTimeout: 30s
+      #retryOn: connect-failure,refused-stream,503

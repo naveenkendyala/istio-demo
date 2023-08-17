@@ -4,7 +4,7 @@ metadata:
   name: customer-gateway
 spec:
   selector:
-    istio: ingressgateway # use istio default controller
+    istio: ingressgateway # Use istio default controller. This is the label on Ingress Pod or the pod template in the deployment
   servers:
   - port:
       number: 80
